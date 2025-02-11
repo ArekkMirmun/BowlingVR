@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8954851713823870615}
   - component: {fileID: 2467948133259186014}
   - component: {fileID: 1385829989210419278}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ball5
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 1
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1

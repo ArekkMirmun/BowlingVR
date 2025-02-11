@@ -1,18 +1,23 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public enum GameState
 {
+    LaneSelection,
     FirstRoll,
     SecondRoll,
+    BallOutOfPlay,
     NextFrame,
     GameOver
 }
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
-    
+    public PinsSpawn[] pinsSpawns;
+    private PinsSpawn currentPinsSpawn;
+    public GameObject LanesUI;
     public GameState gameState = GameState.FirstRoll;
     public TextMeshProUGUI timerText;
     public int currentFrame = 1;
@@ -25,11 +30,32 @@ public class GameController : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private void Update()
     {
-        ResetGame();
+        if (gameState == GameState.FirstRoll || gameState == GameState.SecondRoll)
+        {
+            roundTimer += Time.deltaTime;
+            //Show time left on screen
+            timerText.text = "Time: "+(roundTime-roundTimer).ToString("F2");
+            if (roundTimer >= roundTime)
+            {
+                NextRoll(); 
+                roundTimer = 0f;
+            }
+        }
+        if(gameState == GameState.BallOutOfPlay)
+        {
+            roundTimer += Time.deltaTime;
+            //Show time left on screen
+            timerText.text = "Ball Out: "+(roundTime-roundTimer).ToString("F2");
+            if (roundTimer >= roundTime)
+            {
+                NextRoll(); 
+                roundTimer = 0f;
+            }
+        }
     }
-
+    
     public void ResetPins()
     {
         //TODO: Implement new round logic
@@ -49,11 +75,12 @@ public class GameController : MonoBehaviour
         if (currentRoll == 1)
         {
             currentRoll = 2;
+            currentPinsSpawn.RespawnPinsInsideTrigger();
+            gameState = GameState.SecondRoll;
         }
         else
         {
-            currentFrame++;
-            currentRoll = 1;
+            NextRound();
         }
     }
     
@@ -73,29 +100,30 @@ public class GameController : MonoBehaviour
         {
             NextFrame();
             ResetPins();
+            currentPinsSpawn.SpawnPins();
             gameState = GameState.FirstRoll;
         }
     }
     
-    private void Update()
+    public void BallOutOfPlay(GameObject ball)
     {
-        if (gameState == GameState.FirstRoll || gameState == GameState.SecondRoll)
+        Destroy(ball);
+        if(gameState is GameState.LaneSelection or GameState.GameOver or GameState.BallOutOfPlay) return;
+        gameState = GameState.BallOutOfPlay;
+        roundTimer = 15f;
+    }
+    
+    public void SelectLane(int lane)
+    {
+        print("Selected lane: "+lane);
+        LanesUI.SetActive(false);
+        if (gameState == GameState.LaneSelection)
         {
-            roundTimer += Time.deltaTime;
-            //Show time left on screen
-            timerText.text = "Time: "+(roundTime-roundTimer).ToString("F2");
-            if (roundTimer >= roundTime)
-            {
-                if (gameState == GameState.FirstRoll)
-                {
-                    gameState = GameState.SecondRoll;
-                }
-                else
-                {
-                    NextRound();
-                }
-                roundTimer = 0f;
-            }
+            //Select int pinsSpawnIndex = lane-1;
+            currentPinsSpawn = pinsSpawns[lane-1];
+            currentPinsSpawn.SpawnPins();
+            ResetGame();
         }
     }
+    
 }
