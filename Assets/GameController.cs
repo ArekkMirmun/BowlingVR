@@ -64,6 +64,8 @@ public class GameController : MonoBehaviour
     
     public void ResetGame()
     {
+        PinsCanvas.Instance.NotifyFrame(currentFrame);
+        PinsCanvas.Instance.NotifyRoll(currentRoll);
         currentFrame = 1;
         currentRoll = 1;
         gameState = GameState.FirstRoll;
@@ -75,6 +77,7 @@ public class GameController : MonoBehaviour
         if (currentRoll == 1)
         {
             currentRoll = 2;
+            PinsCanvas.Instance.NotifyRoll(currentRoll);
             currentPinsSpawn.RespawnPinsInsideTrigger();
             gameState = GameState.SecondRoll;
         }
@@ -88,6 +91,8 @@ public class GameController : MonoBehaviour
     {
         currentFrame++;
         currentRoll = 1;
+        PinsCanvas.Instance.NotifyFrame(currentFrame);
+        PinsCanvas.Instance.NotifyRoll(currentRoll);
     }
     
     public void NextRound()
@@ -98,6 +103,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            
             NextFrame();
             ResetPins();
             currentPinsSpawn.SpawnPins();
