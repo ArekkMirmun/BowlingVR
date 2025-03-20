@@ -7,6 +7,7 @@ public class PinsSpawn : MonoBehaviour
     public Pin[] pins;
     public int[] pinsDown;
     public bool[] pinsInsideTrigger; // Boolean array for tracking pins inside trigger
+    public GameObject pinSpawnEffect;
 
     public void SpawnPins()
     {
@@ -31,6 +32,11 @@ public class PinsSpawn : MonoBehaviour
         }
 
         Pin pinGO = Instantiate(pinPrefab, pinsSpawn[index].transform.position, pinPrefab.transform.rotation);
+        //Instantiate pin spawn effect at pinGO position
+        GameObject effect = Instantiate(pinSpawnEffect, pinGO.transform.position, Quaternion.identity);
+        //Destroy it in 2 seconds
+        Destroy(effect, 2);
+        
         pinGO.pinIndex = index;
         pinGO.transform.SetParent(pinsSpawn[index].transform);
         pins[index] = pinGO;

@@ -31,7 +31,7 @@ public class Ball : MonoBehaviour
     {
         if(_alreadySpawned) return;
         _alreadySpawned = true;
-        BallSpawner.Instance.SpawnBallSelectedLane(index);
+        BallSpawnerController.Instance.SpawnBallSelectedLane(index);
     }
 
 }

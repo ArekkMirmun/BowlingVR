@@ -766,6 +766,7 @@ MonoBehaviour:
   pins: []
   pinsDown: 
   pinsInsideTrigger: 
+  pinSpawnEffect: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
 --- !u!65 &7829310865469681399
 BoxCollider:
   m_ObjectHideFlags: 0
