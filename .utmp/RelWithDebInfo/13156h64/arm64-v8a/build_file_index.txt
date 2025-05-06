@@ -1,0 +1,2 @@
+C:\Users\arekk\Documents\UnityProjects\BowlingVR\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\arekk\Documents\UnityProjects\BowlingVR\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
